@@ -1,0 +1,45 @@
+package com.kayllanne.ecommerce.entity;
+
+import jakarta.persistence.*;
+import lombok.*;
+
+import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
+
+@Entity
+@Table(name = "carts")
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+public class Cart {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @OneToOne(fetch = FetchType.LAZY) // Um carrinho pertence a um usuário
+    @JoinColumn(name = "user_id", nullable = false, unique = true) // user_id é uma FK única
+    private User user;
+
+    @OneToMany(mappedBy = "cart", cascade = CascadeType.ALL, orphanRemoval = true)
+    // Um carrinho tem muitos itens. CascadeType.ALL para salvar/deletar itens com o carrinho
+    private Set<CartItem> cartItems = new HashSet<>();
+
+    @Column(nullable = false)
+    private LocalDateTime createdAt;
+
+    private LocalDateTime updatedAt;
+
+    @PrePersist // Define a data de criação antes de persistir
+    protected void onCreate() {
+        this.createdAt = LocalDateTime.now();
+    }
+
+    @PreUpdate // Atualiza a data de atualização antes de cada update
+    protected void onUpdate() {
+        this.updatedAt = LocalDateTime.now();
+    }
+}
