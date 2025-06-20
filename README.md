@@ -38,7 +38,6 @@ Este projeto é a espinha dorsal de um sistema de e-commerce completo, construí
 * **JWT (JSON Web Tokens)** para segurança
 * **Lombok** para reduzir código boilerplate
 * **Maven** para gerenciamento de dependências
-* **Springdoc OpenAPI (Swagger UI)** para documentação interativa da API (acessível em `http://localhost:8080/swagger-ui.html` quando a aplicação estiver rodando).
 
 ## ⚙️ Como Rodar o Projeto Localmente
 
